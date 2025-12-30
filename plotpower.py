@@ -16,16 +16,17 @@ def load_data(filename):
     return df
 
 def create_plot(df, output_file='power_plot.png'):
-    """Create a three-panel plot with PV power, SOC, and cell temperature."""
+    """Create a four-panel plot with PV power, output power, SOC, and cell temperature."""
 
-    # Set up the figure with three subplots sharing x-axis
-    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(12, 10), sharex=True)
+    # Set up the figure with four subplots sharing x-axis
+    fig, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, figsize=(12, 12), sharex=True)
     fig.suptitle('LuxPower Inverter Data', fontsize=14, fontweight='bold')
 
     # Color scheme
     colors = {
         'pv1': '#FF6B35',      # Orange
         'pv2': '#004E89',      # Blue
+        'discharge': '#9932CC', # Dark orchid (purple)
         'soc': '#2E8B57',      # Sea green
         'temp_max': '#DC143C', # Crimson
         'temp_min': '#4169E1', # Royal blue
@@ -41,29 +42,37 @@ def create_plot(df, output_file='power_plot.png'):
     ax1.grid(True, alpha=0.3)
     ax1.set_ylim(bottom=0)
 
-    # Plot 2: Battery SOC
-    ax2.fill_between(df['timestamp'], df['soc_pct'], alpha=0.3, color=colors['soc'])
-    ax2.plot(df['timestamp'], df['soc_pct'], color=colors['soc'], linewidth=2, label='Battery SOC')
-    ax2.set_ylabel('SOC (%)', fontsize=11)
+    # Plot 2: Output Power (Discharge)
+    ax2.fill_between(df['timestamp'], df['p_discharge_w'], alpha=0.3, color=colors['discharge'])
+    ax2.plot(df['timestamp'], df['p_discharge_w'], color=colors['discharge'], linewidth=1.5, label='Output Power')
+    ax2.set_ylabel('Power (W)', fontsize=11)
     ax2.legend(loc='upper right', framealpha=0.9)
     ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0, 100)
+    ax2.set_ylim(bottom=0)
 
-    # Plot 3: Cell Temperature
-    ax3.fill_between(df['timestamp'], df['min_cell_temp_c'], df['max_cell_temp_c'],
-                     alpha=0.3, color='#808080', label='Temp Range')
-    ax3.plot(df['timestamp'], df['max_cell_temp_c'], color=colors['temp_max'],
-             linewidth=1.5, label='Max Cell Temp')
-    ax3.plot(df['timestamp'], df['min_cell_temp_c'], color=colors['temp_min'],
-             linewidth=1.5, label='Min Cell Temp')
-    ax3.set_ylabel('Temperature (°C)', fontsize=11)
-    ax3.set_xlabel('Time', fontsize=11)
+    # Plot 3: Battery SOC
+    ax3.fill_between(df['timestamp'], df['soc_pct'], alpha=0.3, color=colors['soc'])
+    ax3.plot(df['timestamp'], df['soc_pct'], color=colors['soc'], linewidth=2, label='Battery SOC')
+    ax3.set_ylabel('SOC (%)', fontsize=11)
     ax3.legend(loc='upper right', framealpha=0.9)
     ax3.grid(True, alpha=0.3)
+    ax3.set_ylim(0, 100)
+
+    # Plot 4: Cell Temperature
+    ax4.fill_between(df['timestamp'], df['min_cell_temp_c'], df['max_cell_temp_c'],
+                     alpha=0.3, color='#808080', label='Temp Range')
+    ax4.plot(df['timestamp'], df['max_cell_temp_c'], color=colors['temp_max'],
+             linewidth=1.5, label='Max Cell Temp')
+    ax4.plot(df['timestamp'], df['min_cell_temp_c'], color=colors['temp_min'],
+             linewidth=1.5, label='Min Cell Temp')
+    ax4.set_ylabel('Temperature (°C)', fontsize=11)
+    ax4.set_xlabel('Time', fontsize=11)
+    ax4.legend(loc='upper right', framealpha=0.9)
+    ax4.grid(True, alpha=0.3)
 
     # Format x-axis
-    ax3.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-    ax3.xaxis.set_major_locator(mdates.HourLocator(interval=1))
+    ax4.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+    ax4.xaxis.set_major_locator(mdates.HourLocator(interval=1))
     plt.xticks(rotation=45, ha='right')
 
     # Add date range to title
