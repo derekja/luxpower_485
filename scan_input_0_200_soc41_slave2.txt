@@ -1,0 +1,13 @@
+2025-12-27T23:05:12 dumping input: port=/dev/ttySC1 baud=19200 parity=N slave=2 start=0 count=200 chunk=40
+2025-12-27T23:05:14 addr=0 qty=40 ERROR (TIMEOUT_OR_SHORT, need 3 got 0)
+2025-12-27T23:05:14 -> retry qty=20
+2025-12-27T23:05:17 addr=0 qty=20 ERROR (TIMEOUT_OR_SHORT, need 3 got 0)
+2025-12-27T23:05:17 -> retry qty=10
+2025-12-27T23:05:19 addr=0 qty=10 ERROR (TIMEOUT_OR_SHORT, need 3 got 0)
+2025-12-27T23:05:19 -> retry qty=5
+2025-12-27T23:05:21 addr=0 qty=5 ERROR (TIMEOUT_OR_SHORT, need 3 got 0)
+2025-12-27T23:05:21 -> retry qty=2
+2025-12-27T23:05:23 addr=0 qty=2 ERROR (TIMEOUT_OR_SHORT, need 3 got 0)
+2025-12-27T23:05:23 -> retry qty=1
+2025-12-27T23:05:25 addr=0 qty=1 ERROR (TIMEOUT_OR_SHORT, need 3 got 0)
+2025-12-27T23:05:25 stopping at addr=0 due to --stop-on-illegal

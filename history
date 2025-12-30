@@ -1,0 +1,113 @@
+    1  pushd ~/.ssh
+    2  cd .ssh
+    3  ls
+    4  ls -la
+    5  cat authorized_keys 
+    6  cd ..
+    7  sudo vim /etc/ssh/sshd_config
+    8  sudo apt install vim
+    9  sudo vim /etc/ssh/sshd_config
+   10  sudo systemctl restart ssh
+   11  sudo raspi-config
+   12  ls -la
+   13  lsblk
+   14  sudo umount /dev/sda2
+   15  lsblk
+   16  sudo dd if=/dev/sda of=sdcard.img bs=4M status=progress conv=sync,noerror
+   17  lsblk
+   18  ls -la
+   19  df -h
+   20  sudo rm sdcard.img
+   21  df -h
+   22  pushd /media/derekja
+   23  ls
+   24  cd 86BC-55C6/
+   25  ls
+   26  sudo dd if=/dev/sda of=./sdcard.img bs=4M status=progress conv=sync,noerror
+   27  sudorm sdcard.img
+   28  sudo rm sdcard.img
+   29  sudo dd if=/dev/sda bs=4M status=progress | gzip -1 > ./sdcard.img.gz
+   30  df -h
+   31  sudo apt update
+   32  sudo apt install -y python3-pip
+   33  pip3 install pyserial
+   34  ls -l /dev/serial0 /dev/ttyAMA0 /dev/ttySC*
+   35  sudo apt update
+   36  sudo apt install -y python3-serial
+   37  ls -l /dev/tty*
+   38  ls -l /dev/spidev*
+   39  sudo raspi-config
+   40  sudo reboot
+   41  ls -l /dev/spidev*
+   42  sudo nano /boot/firmware/config.txt
+   43  sudo reboot
+   44  ls -l /dev/ttySC*
+   45  dmesg | grep -i sc16
+   46  nano sniffer.py
+   47  chmod +x sniffer.py
+   48  ./sniffer.py --port /dev/ttySC1 --baud 9600 --gap-ms 20 --also-stdout
+   49  echo $XDG_SESSION_TYPE
+   50  sudo systemctl set-default multi-user.target
+   51  sudo reboot
+   52  sudo systemctl set-default graphical.target
+   53  sudo reboot
+   54  sudo nano /boot/firmware/config.txt
+   55  sudo reboot
+   56  ls -l /dev/ttySC*
+   57  ./sniffer.py --port /dev/ttySC1 --baud 9600 --gap-ms 20 --also-stdout
+   58  ./sniffer.py --port /dev/ttySC1 --baud 19200 --gap-ms 20 --also-stdout
+   59  /dev/ttySC0
+   60  /dev/ttySC1
+   61  ls -l /dev/ttySC*
+   62  sudo usermod -a -G dialout derekja
+   63  exit
+   64  groups
+   65  ./sniffer.py --port /dev/ttySC1 --baud 9600 --gap-ms 20 --also-stdout
+   66  ./sniffer.py --port /dev/ttySC1 --baud 19200 --gap-ms 20 --also-stdout
+   67  ./sniffer.py --port /dev/ttySC0 --baud 9600 --gap-ms 20 --also-stdout
+   68  ./sniffer.py --port /dev/ttySC0 --baud 19200 --gap-ms 20 --also-stdout
+   69  ./sniffer.py --port /dev/ttySC0 --baud 9600 --gap-ms 20 --also-stdout
+   70  ./sniffer.py --port /dev/ttySC0 --baud 19200 --gap-ms 20 --also-stdout
+   71  ./sniffer.py --port /dev/ttySC1 --baud 9600 --gap-ms 20 --also-stdout
+   72  ./sniffer.py --port /dev/ttySC1 --baud 19200 --gap-ms 20 --also-stdout
+   73  sudo nano /boot/firmware/config.txt
+   74  sudo reboot
+   75  ls -l /dev/ttySC*
+   76  ./sniffer.py --port /dev/ttySC1 --baud 19200 --gap-ms 20 --also-stdout
+   77  ./sniffer.py --port /dev/ttySC0 --baud 19200 --gap-ms 20 --also-stdout
+   78  ./sniffer.py --port /dev/ttySC0 --baud 19200 --gap-ms 5 --also-stdout --log eg4_gap.log
+   79  python3 - <<'PY'
+   80  import serial, time
+   81  ser = serial.Serial("/dev/ttySC0", 19200, timeout=0.1)
+   82  fn = f"eg4_raw_{int(time.time())}.bin"
+   83  with open(fn, "wb") as f:
+   84      t_end = time.time() + 60
+   85      while time.time() < t_end:
+   86          b = ser.read(4096)
+   87          if b: f.write(b)
+   88  print("wrote", fn)
+   89  PY
+   90  ls
+   91  cat eg4_gap.log 
+   92  ./inverter_soc_poller_serial.py --port /dev/ttySC1 --baud 9600 --parity N --slave 1 --stdout
+   93  ./inverter_soc_poller_serial.py --port /dev/ttySC1 --baud 9600 --parity N --slave 2 --stdout
+   94  ./inverter_soc_poller_serial.py --port /dev/ttySC1 --baud 19200 --parity N --slave 2 --stdout
+   95  ./inverter_soc_poller_serial.py --port /dev/ttySC1 --baud 19200 --parity N --slave 1 --stdout
+   96  ls
+   97  echo 39 > soc.txt
+   98  ./eg4_cv_emulator.py --port /dev/ttySC0 --baud 9600 --slave 0x01 --parity N
+   99  claude
+  100  exit
+  101  python3 dump_ongoing.py --port /dev/ttySC1 --interval 600 --output data_dec27.csv
+  102  ls
+  103  cat data_dec27.csv 
+  104  python3 dump_ongoing.py --port /dev/ttySC1 --interval 600 --output data_dec27a.csv
+  105  sudo date -s
+  106  sudo date
+  107  sudo timedatectl set-timezone America/Vancouver
+  108  sudo date
+  109  python3 dump_ongoing.py --port /dev/ttySC1 --interval 600 --output data_dec27b.csv
+  110  python3 dump_ongoing.py --port /dev/ttySC1 --interval 600 --output data_dec28.csv
+  111  git status
+  112  python3 plotpower.py data_dec28.csv dec28.png
+  113  history >>history

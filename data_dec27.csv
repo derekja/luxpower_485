@@ -1,0 +1,2 @@
+timestamp,timestamp_unix,vbat_raw,soc_soh_raw,reg_6,reg_7,reg_8,reg_9,p_charge_w,p_discharge_w,t_inner_c,t_rad1_c,t_rad2_c,t_bat_c,max_cell_volt_raw,min_cell_volt_raw,max_cell_temp_raw,min_cell_temp_raw,bms_status,cycle_count,bat_volt_sample_raw,reg_108,soc_pct,soh_pct,vbat_v,max_cell_temp_c,min_cell_temp_c,max_cell_volt_v,min_cell_volt_v
+2025-12-27T23:23:52,1766895832,521,24103,14592,0,0,0,0,1452,22,30,29,4,3248,3236,142,104,16,2,513,216,39,94,52.1,14.2,10.4,3.248,3.236
